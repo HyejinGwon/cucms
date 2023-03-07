@@ -9,9 +9,9 @@
   request.setCharacterEncoding("UTF-8");
 %>
 <%-- <c:set var="contextPath" value="${pageContext.request.contextPath}" /> --%>
-<%--     <tiles:importAttribute name="bbsMngList"/> --%>
-<%--     <tiles:importAttribute name="authrtMngList"/> --%>
-<%--     <tiles:importAttribute name="menuMngList"/> --%>
+    <tiles:importAttribute name="bbsMngList"/>
+    <tiles:importAttribute name="authrtMngList"/>
+    <tiles:importAttribute name="menuMngList"/>
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -116,14 +116,14 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="true" aria-controls="collapseOne">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>게시판관리</span>
+                <span>메뉴관리</span>
             </a>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-<!--                     <h6 class="collapse-header"></h6> -->
-<%--                     <c:forEach var ="menu" items="${boardList}"> --%>
-<%-- 	                    <a class="collapse-item" href="tiles/${menu}.do">${menu}</a> --%>
-<%--                     </c:forEach> --%>
+                    <h6 class="collapse-header"></h6>
+                    <c:forEach var ="menu" items="${menuMngList}">
+	                    <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+                    </c:forEach>
                 </div>
             </div>
         </li>
@@ -137,10 +137,10 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-<!--                     <h6 class="collapse-header">Custom Utilities:</h6> -->
-<%--                     <c:forEach var ="menu" items="${authList}"> --%>
-<%--                         <a class="collapse-item" href="tiles/${menu}.do">${menu}</a> --%>
-<%--                     </c:forEach> --%>
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <c:forEach var ="menu" items="${authrtMngList}">
+                        <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+                    </c:forEach>
                     <a class="collapse-item" href="utilities-color.do">Colors</a>
                     <a class="collapse-item" href="utilities-border.do">Borders</a>
                     <a class="collapse-item" href="utilities-animation.do">Animations</a>
@@ -154,14 +154,14 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree">
                 <i class="fas fa-fw fa-wrench"></i>
-                <span>메뉴관리</span>
+                <span>게시판관리</span>
             </a>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-<!--                     <h6 class="collapse-header">Custom Utilities:</h6> -->
-<%--                     <c:forEach var ="menu" items="${ppupList}"> --%>
-<%--                         <a class="collapse-item" href="tiles/${menu}.do">${menu}</a> --%>
-<%--                     </c:forEach> --%>
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <c:forEach var ="menu" items="${bbsMngList}">
+                        <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+                    </c:forEach>
                 </div>
             </div>
         </li>

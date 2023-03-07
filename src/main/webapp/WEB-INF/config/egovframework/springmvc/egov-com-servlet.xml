@@ -71,7 +71,10 @@
 		    <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 		    <property name="order" value="1" />
 		</bean>
-		 
+		
+		<!-- ViewPreparer을 위한 bean 등록. 얘(menuPreparer)를 common-def에서 불러들이고 menuPreparer를 사용하기 위해 아래의 preparerFactoryClass에서 빈을 생성함 -->
+		<bean id="menuPreparer" class="egovframework.cums.cmm.MenuPreparer"></bean> 
+		
 		<!-- Tiles Configurer -->
 		<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		        <property name="definitions">
@@ -80,9 +83,11 @@
 		<!--                     <value>/WEB-INF/config/egovframework/tiles/tiles-def.xml</value> -->
 		            </list>
 		        </property>
+		        <!-- preparerFactoryClass: tiles에 추가적인 기능(menuPreparer와 같은)을 더해주기 위해 선언한 부분이다. 76번 줄처럼 property를 선언해 주고 그것을 위해 빈을 생성하는 부분이다. -->
+		        <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"></property>
 		</bean>
 		<!--  //Tiles 설정 -->
-		 
+		
 		<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2"
 		      p:viewClass="org.springframework.web.servlet.view.JstlView"
 		      p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>

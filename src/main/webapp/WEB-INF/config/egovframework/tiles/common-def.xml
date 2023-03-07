@@ -5,7 +5,7 @@
 <tiles-definitions>
  
     <!-- 기본 -->
-    <definition name="cums_base" template="/WEB-INF/jsp/_tiles/cums/layout.jsp">
+    <definition name="cums_base" template="/WEB-INF/jsp/_tiles/cums/layout.jsp" preparer="menuPreparer" >
         <put-attribute name="gnb" value="/WEB-INF/jsp/_tiles/cums/gnb.jsp"/>
         <put-attribute name="top" value="/WEB-INF/jsp/_tiles/cums/top.jsp" />
 <!--         <put-attribute name="lnb" value="/WEB-INF/jsp/_tiles/cums/lnb.jsp" /> -->

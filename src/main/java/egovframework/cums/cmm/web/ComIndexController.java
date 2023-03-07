@@ -31,11 +31,14 @@ package egovframework.cums.cmm.web;
  */
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
+import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
+import org.egovframe.rte.psl.dataaccess.util.EgovMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -52,6 +55,7 @@ import egovframework.com.cmm.annotation.IncludedInfo;
 import egovframework.com.cmm.service.EgovProperties;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.com.uat.uia.service.EgovLoginService;
+import egovframework.cums.cmm.service.CumsCmmUseService;
 
 @Controller
 public class ComIndexController implements ApplicationContextAware, InitializingBean {
@@ -74,6 +78,9 @@ public class ComIndexController implements ApplicationContextAware, Initializing
 	@Resource(name = "loginService")
 	private EgovLoginService loginService;
 
+	@Resource(name = "cumsCmmUseService")
+	private CumsCmmUseService service;
+	
 	@RequestMapping("/main.do")
 	public String index(ModelMap model) {
 		return "/cums/mnu/main";
@@ -131,7 +138,7 @@ public class ComIndexController implements ApplicationContextAware, Initializing
 	}
 
 	@RequestMapping("/cumsLeft.do")
-	public String setLeftMenu(ModelMap model) {
+	public String setLeftMenu(ModelMap model) throws EgovBizException {
 
 		Map<Integer, IncludedCompInfoVO> map = new TreeMap<Integer, IncludedCompInfoVO>();
 		RequestMapping rmAnnotation;
@@ -201,7 +208,10 @@ public class ComIndexController implements ApplicationContextAware, Initializing
 		}
 
 		model.addAttribute("resultList", map.values());
-
+		
+		List<EgovMap> menuMngList = service.retrieveMenuMngList();
+		model.addAttribute("menuMngList", menuMngList);
+			
 		LOGGER.debug("ComIndexController index is called ");
 
 		return "jsp/_tiles/cums/gnb";

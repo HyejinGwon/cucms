@@ -8,7 +8,7 @@ import egovframework.com.cmm.service.CmmnDetailCode;
 import org.springframework.stereotype.Repository;
 
 /**
- * @Class Name : CmmUseDAO.java
+ * @Class Name : CumsCmmUseDAO.java
  * @Description : 공통코드등 전체 업무에서 공용해서 사용해야 하는 서비스를 정의하기위한 데이터 접근 클래스
  * @Modification Information
  *
@@ -34,7 +34,7 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      */
     @SuppressWarnings("unchecked")
     public List<CmmnDetailCode> selectCmmCodeDetail(ComDefaultCodeVO vo) throws Exception {
-	return (List<CmmnDetailCode>) list("CmmUseDAO.selectCmmCodeDetail", vo);
+	return (List<CmmnDetailCode>) list("cmmUseDAO.selectCmmCodeDetail", vo);
     }
 
     /**
@@ -46,7 +46,7 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      */
     @SuppressWarnings("unchecked")
     public List<CmmnDetailCode> selectOgrnztIdDetail(ComDefaultCodeVO vo) throws Exception {
-	return (List<CmmnDetailCode>) list("CmmUseDAO.selectOgrnztIdDetail", vo);
+	return (List<CmmnDetailCode>) list("cmmUseDAO.selectOgrnztIdDetail", vo);
     }
 
     /**
@@ -57,6 +57,6 @@ public class CmmUseDAO extends EgovComAbstractDAO {
      */
     @SuppressWarnings("unchecked")
     public List<CmmnDetailCode> selectGroupIdDetail(ComDefaultCodeVO vo) throws Exception {
-	return (List<CmmnDetailCode>) list("CmmUseDAO.selectGroupIdDetail", vo);
+	return (List<CmmnDetailCode>) list("cmmUseDAO.selectGroupIdDetail", vo);
     }
 }
