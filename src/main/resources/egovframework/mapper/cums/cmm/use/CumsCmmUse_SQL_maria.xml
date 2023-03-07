@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Wed May 11 15:49:39 KST 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CumsCmmUseDAO">
+
+<!-- 	<resultMap id="CmmCodeDetail" type="egovframework.com.cmm.service.CmmnDetailCode"> -->
+<!-- 		<result property="codeId" column="CODE_ID"/> -->
+<!-- 		<result property="code" column="CODE"/> -->
+<!-- 		<result property="codeNm" column="CODE_NM"/> -->
+<!-- 		<result property="codeDc" column="CODE_DC"/> -->
+<!-- 	</resultMap> -->
+
+	<select id="retrieveMenuMngList" parameterType="String" resultMap="map">
+		 /* 왼쪽 메뉴관리 메뉴 가져오기 */
+		SELECT MENU_NO 
+			 , MENU_ORDR 
+			 , MENU_NM 
+			 , UPPER_MENU_NO 
+			 , MENU_DC
+			 , RELATE_IMAGE_PATH 
+			 , RELATE_IMAGE_NM 
+			 , PROGRM_FILE_NM
+		  FROM COMTNMENUINFO 
+		 WHERE MENU_NO IN ('6180000','6130000','6140000','6150000','6160000') 
+		 ORDER BY MENU_ORDR
+		
+	</select>
+
+    
+
+</mapper>
