@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.egovframe.rte.fdl.cmmn.exception.EgovBizException;
 import org.egovframe.rte.psl.dataaccess.util.EgovMap;
+import org.springframework.stereotype.Service;
 
 import egovframework.com.cmm.ComDefaultCodeVO;
 

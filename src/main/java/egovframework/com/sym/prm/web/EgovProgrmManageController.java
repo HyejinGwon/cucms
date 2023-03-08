@@ -136,7 +136,7 @@ public class EgovProgrmManageController {
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
 
-      	return "egovframework/com/sym/prm/EgovProgramListManage";
+      	return "egovframework/com/sym/prm/EgovProgramListManage"; // CumsCmmUseController에서 요청받아서 처리하도록 복붙해야 한다. cums/com/sym/prm/EgovProgramListManage
 
     }
 

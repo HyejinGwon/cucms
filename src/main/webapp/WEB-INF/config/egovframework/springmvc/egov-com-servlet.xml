@@ -73,6 +73,7 @@
 		</bean>
 		
 		<!-- ViewPreparer을 위한 bean 등록. 얘(menuPreparer)를 common-def에서 불러들이고 menuPreparer를 사용하기 위해 아래의 preparerFactoryClass에서 빈을 생성함 -->
+		<!-- egovframework 패키지 밑에 cums를 넣은 이유는 저 위에 base package에 egovframework라고 선언되어있기 때문이다. cums로 적기엔 바꿔야 할 것들이 너무 많아서 나중에 여유로울 때 패키지를 재 정리해 보겠다. -->
 		<bean id="menuPreparer" class="egovframework.cums.cmm.MenuPreparer"></bean> 
 		
 		<!-- Tiles Configurer -->

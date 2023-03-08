@@ -122,7 +122,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header"></h6>
                     <c:forEach var ="menu" items="${menuMngList}">
-	                    <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+	                    <a class="collapse-item" href="${menu.url}">${menu.menuNm}</a>
                     </c:forEach>
                 </div>
             </div>

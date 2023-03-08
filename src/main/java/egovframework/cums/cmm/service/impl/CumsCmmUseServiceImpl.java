@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import egovframework.cums.cmm.service.CumsCmmUseService;
 
+
+
 /**
  * @Class Name : CumsCmmUseServiceImpl.java
  * @Description : 업무에서 공용해서 사용해야 하는 서비스를 정의하기 위한 서비스 구현 클래스
