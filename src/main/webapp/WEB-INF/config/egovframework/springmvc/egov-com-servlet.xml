@@ -72,10 +72,6 @@
 		    <property name="order" value="1" />
 		</bean>
 		
-		<!-- ViewPreparer을 위한 bean 등록. 얘(menuPreparer)를 common-def에서 불러들이고 menuPreparer를 사용하기 위해 아래의 preparerFactoryClass에서 빈을 생성함 -->
-		<!-- egovframework 패키지 밑에 cums를 넣은 이유는 저 위에 base package에 egovframework라고 선언되어있기 때문이다. cums로 적기엔 바꿔야 할 것들이 너무 많아서 나중에 여유로울 때 패키지를 재 정리해 보겠다. -->
-		<bean id="menuPreparer" class="egovframework.cums.cmm.MenuPreparer"></bean> 
-		
 		<!-- Tiles Configurer -->
 		<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		        <property name="definitions">
@@ -87,11 +83,17 @@
 		        <!-- preparerFactoryClass: tiles에 추가적인 기능(menuPreparer와 같은)을 더해주기 위해 선언한 부분이다. 76번 줄처럼 property를 선언해 주고 그것을 위해 빈을 생성하는 부분이다. -->
 		        <property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"></property>
 		</bean>
+		
+		<!-- ViewPreparer을 위한 bean 등록. 얘(menuPreparer)를 common-def에서 불러들이고 menuPreparer를 사용하기 위해 아래의 preparerFactoryClass에서 빈을 생성함 -->
+		<!-- egovframework 패키지 밑에 cums를 넣은 이유는 저 위에 base package에 egovframework라고 선언되어있기 때문이다. cums로 적기엔 바꿔야 할 것들이 너무 많아서 나중에 여유로울 때 패키지를 재 정리해 보겠다. -->
+		<bean id="menuPreparer" class="egovframework.cums.cmm.MenuPreparer"></bean> 
+		
+		
 		<!--  //Tiles 설정 -->
 		
 		<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2"
 		      p:viewClass="org.springframework.web.servlet.view.JstlView"
-		      p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+		      p:prefix="/WEB-INF/jsp/cums/" p:suffix=".jsp"/>
 		      
 		<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 		    <property name="contentType" value="text/html;charset=UTF-8"/>

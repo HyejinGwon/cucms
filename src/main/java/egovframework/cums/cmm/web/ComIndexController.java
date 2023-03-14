@@ -80,7 +80,7 @@ public class ComIndexController implements ApplicationContextAware, Initializing
 	
 	@RequestMapping("/main.do")
 	public String index(ModelMap model) {
-		return "/cums/mnu/main";
+		return "/cums/com/cmm/mnu/main";
 	}
 
 	@RequestMapping("/cumsTop.do")
@@ -122,15 +122,16 @@ public class ComIndexController implements ApplicationContextAware, Initializing
 			LOGGER.debug("===>>> passedDayChangePWD = "+passedDayChangePWD);
 			model.addAttribute("passedDay", passedDayChangePWD);
 			
-			url = "cums/mnu/main";
+			url = "cums/com/cmm/mnu/main";
 			
 		} else {
 			url = "egovframework/com/uat/uia/EgovLoginUsr";
+//			url = "cums/com/cmm/mnu/main";
 		} 
 
 		// 만료일자로부터 경과한 일수 => ex)1이면 만료일에서 1일 경과
 		model.addAttribute("elapsedTimeExpiration", passedDayChangePWD - expirePwdDay);
-
+		LOGGER.debug("===>>> url = "+url);
 		return url;
 	}
 

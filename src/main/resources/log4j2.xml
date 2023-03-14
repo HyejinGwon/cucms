@@ -6,23 +6,47 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="java.sql" level="INFO" additivity="false">
-            <AppenderRef ref="console" />
-        </Logger>
-        <Logger name="egovframework" level="INFO" additivity="false">
+        <Logger name="egovframework" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
         <Logger name="org.egovframe" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
-		<!-- log SQL with timing information, post execution -->
-	    <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
-	        <AppenderRef ref="console" />
-	    </Logger>
-	    <Logger name="org.springframework" level="INFO" additivity="false">
-	        <AppenderRef ref="console" />
-	    </Logger>
-        <Root level="ERROR">
+        
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        
+        <!--  SQL 쿼리 문장 -->
+     
+        <Logger name="java.sql" level="ERROR" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        
+        <Logger name="jdbc.sqlonly" level="ERROR" additivity="false"> 
+            <AppenderRef ref="console" /> 
+        </Logger>
+        
+        <!-- log SQL with timing information, post execution -->
+        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        
+         <Logger name="jdbc.audit" level="WARN" additivity="false">
+             <appender-ref ref="console"/>
+         </Logger>
+        
+         <Logger name="jdbc.resultset" level="WARN" additivity="false">
+             <appender-ref ref="console"/>
+         </Logger>
+         
+ 
+        <Logger name="jdbc.resultSettable" level="INFO" additivity="false">
+            <appender-ref ref="console"/>
+        </Logger>
+        
+ 
+        <Root level="INFO">
             <AppenderRef ref="console" />
         </Root>
     </Loggers>

@@ -8,20 +8,20 @@
     <definition name="cums_base" template="/WEB-INF/jsp/_tiles/cums/layout.jsp" preparer="menuPreparer" >
         <put-attribute name="gnb" value="/WEB-INF/jsp/_tiles/cums/gnb.jsp"/>
         <put-attribute name="top" value="/WEB-INF/jsp/_tiles/cums/top.jsp" />
-<!--         <put-attribute name="lnb" value="/WEB-INF/jsp/_tiles/cums/lnb.jsp" /> -->
-<!-- 		<put-attribute name="content" value="/WEB-INF/jsp/cums/mnu/main.jsp" /> -->
+        <put-attribute name="lnb" value="/WEB-INF/jsp/_tiles/cums/lnb.jsp" />
+		<put-attribute name="content" value="" />
         <put-attribute name="footer" value="/WEB-INF/jsp/_tiles/cums/footer.jsp" />
     </definition>
     
-    <!--  예시 경로 cums/aaa/bbb -->
-    <definition name="cums/*/*" extends="cums_base">
-        <put-attribute name="content" value="/WEB-INF/jsp/cums/{1}/{2}.jsp" />
-<!--         <put-attribute name="content" value="/WEB-INF/jsp/egovframework/{1}/{2}.jsp" /> -->
+    <!--  예시 경로 cums/*/* -->
+    <definition name="*/*/*/*/*" extends="cums_base">
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
     </definition>
     
-    <!--  예시 경로 cums/* -->
-<!-- 	    <definition name="cums/*" extends="cums_base"> -->
-<!-- 	        <put-attribute name="content" value="/WEB-INF/jsp/cums/_tiles/{1}.jsp" /> -->
-<!-- 	    </definition> -->
- 
+    
+    <!--  예시 경로 cums/* 
+	    <definition name="cums/*/*/*" extends="cums_base">
+	        <put-attribute name="content" value="/WEB-INF/jsp/cums/com/{1}/{2}/{3}.jsp" />
+	    </definition>
+ -->
 </tiles-definitions>

@@ -33,6 +33,11 @@
 	            <mvc:exclude-mapping path="/EgovTop.do" />
 	            <mvc:exclude-mapping path="/EgovBottom.do" />
 	            <mvc:exclude-mapping path="/EgovModal.do" />
+	            <mvc:exclude-mapping path="/footer.do" />
+	            <mvc:exclude-mapping path="/gnb.do" />
+	            <mvc:exclude-mapping path="/left.do" />
+	            <mvc:exclude-mapping path="/top.do" />
+	            <mvc:exclude-mapping path="/content.do" />
 	            
 	            <bean class="egovframework.com.cmm.interceptor.AuthenticInterceptor">
 		           	<!-- 관리자 권한 Ant style Pattern List -->				
