@@ -10,9 +10,9 @@ import egovframework.com.cmm.annotation.IncludedInfo;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.com.cop.ems.service.EgovSndngMailRegistService;
 import egovframework.com.cop.ems.service.SndngMailVO;
-import egovframework.com.sym.prm.service.EgovProgrmManageService;
-import egovframework.com.sym.prm.service.ProgrmManageDtlVO;
-import egovframework.com.sym.prm.service.ProgrmManageVO;
+import egovframework.cums.sym.prm.service.CumsProgrmManageService;
+import egovframework.cums.sym.prm.service.CumsProgrmManageDtlVO;
+import egovframework.cums.sym.prm.service.CumsProgrmManageVO;
 import egovframework.com.utl.fcc.service.EgovStringUtil;
 import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
@@ -58,8 +58,8 @@ public class CumsProgrmManageController {
     protected EgovPropertyService propertiesService;
 
     /** EgovProgrmManageService */
-	@Resource(name = "progrmManageService")
-    private EgovProgrmManageService progrmManageService;
+	@Resource(name = "cumsProgrmManageService")
+    private CumsProgrmManageService cumsProgrmManageService;
 
 	/** EgovMessageSource */
     @Resource(name="egovMessageSource")
@@ -88,10 +88,10 @@ public class CumsProgrmManageController {
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	}
     	
-    	ProgrmManageVO vo = new ProgrmManageVO();
+    	CumsProgrmManageVO vo = new CumsProgrmManageVO();
     	vo.setProgrmFileNm(tmp_progrmNm);
-    	ProgrmManageVO progrmManageVO = progrmManageService.selectProgrm(vo);
-        model.addAttribute("progrmManageVO", progrmManageVO);
+    	CumsProgrmManageVO cumsProgrmManageVO = cumsProgrmManageService.selectProgrm(vo);
+        model.addAttribute("cumsProgrmManageVO", cumsProgrmManageVO);
         return "cums/com/sym/prm/CumsProgramListDetailSelectUpdt";
     }
 
@@ -103,9 +103,7 @@ public class CumsProgrmManageController {
      */
     @IncludedInfo(name="프로그램관리",order = 1111 ,gid = 60)
     @RequestMapping(value="/sym/prm/CumsProgramListManageSelect.do")
-    public String selectProgrmList(
-    		@ModelAttribute("searchVO") ComDefaultVO searchVO,
-    		ModelMap model)
+    public String selectProgrmList(@ModelAttribute("searchVO") ComDefaultVO searchVO, ModelMap model)
             throws Exception {
         // 0. Spring Security 사용자권한 처리
     	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
@@ -128,11 +126,11 @@ public class CumsProgrmManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-        List<?> list_progrmmanage = progrmManageService.selectProgrmList(searchVO);
+        List<?> list_progrmmanage = cumsProgrmManageService.selectProgrmList(searchVO);
         model.addAttribute("list_progrmmanage", list_progrmmanage);
         model.addAttribute("searchVO", searchVO);
 
-        int totCnt = progrmManageService.selectProgrmListTotCnt(searchVO);
+        int totCnt = cumsProgrmManageService.selectProgrmListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
 
@@ -149,7 +147,7 @@ public class CumsProgrmManageController {
     @RequestMapping("/sym/prm/CumsProgrmManageListDelete.do")
     public String deleteProgrmManageList(
             @RequestParam("checkedProgrmFileNmForDel") String checkedProgrmFileNmForDel ,
-            @ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO,
+            @ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO,
             ModelMap model)
             throws Exception {
 		String sLocationUrl = null;
@@ -165,7 +163,7 @@ public class CumsProgrmManageController {
     		resultMsg = egovMessageSource.getMessage("fail.common.delete");
     		sLocationUrl = "forward:/sym/prm/CumsProgramListManageSelect.do";
 		}else{
-    	   progrmManageService.deleteProgrmManageList(checkedProgrmFileNmForDel);
+    	   cumsProgrmManageService.deleteProgrmManageList(checkedProgrmFileNmForDel);
     	   resultMsg = egovMessageSource.getMessage("success.common.delete");
     	   sLocationUrl ="forward:/sym/prm/CumsProgramListManageSelect.do";
 		}
@@ -176,7 +174,7 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램목록을 등록화면으로 이동 및 등록 한다.
-     * @param progrmManageVO ProgrmManageVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @param commandMap     Map
      * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramListRegist",
      *         출력페이지정보 등록처리시 "forward:/sym/prm/EgovProgramListManageSelect.do"
@@ -185,7 +183,7 @@ public class CumsProgrmManageController {
     @RequestMapping(value="/sym/prm/CumsProgramListRegist.do")
     public String insertProgrmList(
     		@RequestParam Map<?, ?> commandMap,
-    		@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO,
+    		@ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO,
 			BindingResult bindingResult,
 			ModelMap model)
             throws Exception {
@@ -200,13 +198,13 @@ public class CumsProgrmManageController {
 
         String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
         if(sCmd.equals("insert")){
-	        beanValidator.validate(progrmManageVO, bindingResult);
+	        beanValidator.validate(cumsProgrmManageVO, bindingResult);
 			if (bindingResult.hasErrors()){
 				sLocationUrl = "cums/com/sym/prm/CumsProgramListRegist";
 				return sLocationUrl;
 			}
-			if(progrmManageVO.getProgrmDc()==null || progrmManageVO.getProgrmDc().equals("")){progrmManageVO.setProgrmDc(" ");}
-	    	progrmManageService.insertProgrm(progrmManageVO);
+			if(cumsProgrmManageVO.getProgrmDc()==null || cumsProgrmManageVO.getProgrmDc().equals("")){cumsProgrmManageVO.setProgrmDc(" ");}
+	    	cumsProgrmManageService.insertProgrm(cumsProgrmManageVO);
 			resultMsg = egovMessageSource.getMessage("success.common.insert");
 	        sLocationUrl = "forward:/sym/prm/CumsProgramListManageSelect.do";
         }else{
@@ -218,14 +216,14 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램목록을 수정 한다.
-     * @param progrmManageVO ProgrmManageVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramListManageSelect.do"
      * @exception Exception
      */
     /*프로그램목록수정*/
     @RequestMapping(value="/sym/prm/CumsProgramListDetailSelectUpdt.do")
     public String updateProgrmList(
-    		@ModelAttribute("progrmManageVO") ProgrmManageVO progrmManageVO,
+    		@ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO,
     		BindingResult bindingResult,
     		ModelMap model)
             throws Exception {
@@ -238,13 +236,13 @@ public class CumsProgrmManageController {
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	}
 
-        beanValidator.validate(progrmManageVO, bindingResult);
+        beanValidator.validate(cumsProgrmManageVO, bindingResult);
 		if (bindingResult.hasErrors()){
 			sLocationUrl = "forward:/sym/prm/EgovProgramListDetailSelect.do";
 			return sLocationUrl;
 		}
-		if(progrmManageVO.getProgrmDc()==null || progrmManageVO.getProgrmDc().equals("")){progrmManageVO.setProgrmDc(" ");}
-		progrmManageService.updateProgrm(progrmManageVO);
+		if(cumsProgrmManageVO.getProgrmDc()==null || cumsProgrmManageVO.getProgrmDc().equals("")){cumsProgrmManageVO.setProgrmDc(" ");}
+		cumsProgrmManageService.updateProgrm(cumsProgrmManageVO);
 		resultMsg = egovMessageSource.getMessage("success.common.update");
         sLocationUrl = "forward:/sym/prm/EgovProgramListManageSelect.do";
     	model.addAttribute("resultMsg", resultMsg);
@@ -253,14 +251,14 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램목록을 삭제 한다.
-     * @param progrmManageVO ProgrmManageVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramListManageSelect.do"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramListManageDelete.do")
     public String deleteProgrmList(
-    		@ModelAttribute("progrmManageVO")
-    		ProgrmManageVO progrmManageVO,
+    		@ModelAttribute("cumsProgrmManageVO")
+    		CumsProgrmManageVO cumsProgrmManageVO,
     		ModelMap model)
             throws Exception {
     	String resultMsg = "";
@@ -270,7 +268,7 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	}
-        progrmManageService.deleteProgrm(progrmManageVO);
+        cumsProgrmManageService.deleteProgrm(cumsProgrmManageVO);
         resultMsg = egovMessageSource.getMessage("success.common.delete");
     	model.addAttribute("resultMsg", resultMsg);
         return "forward:/sym/prm/EgovProgramListManageSelect.do";
@@ -309,10 +307,10 @@ public class CumsProgrmManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-        List<?> list_changerequst = progrmManageService.selectProgrmChangeRequstList(searchVO);
+        List<?> list_changerequst = cumsProgrmManageService.selectProgrmChangeRequstList(searchVO);
         model.addAttribute("list_changerequst", list_changerequst);
 
-        int totCnt = progrmManageService.selectProgrmChangeRequstListTotCnt(searchVO);
+        int totCnt = cumsProgrmManageService.selectProgrmChangeRequstListTotCnt(searchVO);
  		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
 
@@ -321,13 +319,13 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램변경요청목록을 상세조회한다.
-     * @param progrmManageDtlVO ProgrmManageDtlVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "sym/prm/EgovProgramChangRequstDetailSelectUpdt"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstDetailSelect.do")
     public String selectProgrmChangeRequst(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		ModelMap model)
             throws Exception {
          // 0. Spring Security 사용자권한 처리
@@ -336,20 +334,20 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	 }
-         if(progrmManageDtlVO.getProgrmFileNm()== null||progrmManageDtlVO.getProgrmFileNm().equals("")){
-	    	 String FileNm = progrmManageDtlVO.getTmpProgrmNm();
-	         progrmManageDtlVO.setProgrmFileNm(FileNm);
-	         int tmpNo = progrmManageDtlVO.getTmpRqesterNo();
-	         progrmManageDtlVO.setRqesterNo(tmpNo);
+         if(cumsProgrmManageDtlVO.getProgrmFileNm()== null||cumsProgrmManageDtlVO.getProgrmFileNm().equals("")){
+	    	 String FileNm = cumsProgrmManageDtlVO.getTmpProgrmNm();
+	    	 cumsProgrmManageDtlVO.setProgrmFileNm(FileNm);
+	         int tmpNo = cumsProgrmManageDtlVO.getTmpRqesterNo();
+	         cumsProgrmManageDtlVO.setRqesterNo(tmpNo);
          }
-         ProgrmManageDtlVO resultVO = progrmManageService.selectProgrmChangeRequst(progrmManageDtlVO);
-         model.addAttribute("progrmManageDtlVO", resultVO);
+         CumsProgrmManageDtlVO resultVO = cumsProgrmManageService.selectProgrmChangeRequst(cumsProgrmManageDtlVO);
+         model.addAttribute("cumsProgrmManageVO", resultVO);
          return "egovframework/com/sym/prm/EgovProgramChangRequstDetailSelectUpdt";
     }
 
     /**
      * 프로그램변경요청 화면을 호출및 프로그램변경요청을 등록한다.
-     * @param progrmManageDtlVO ProgrmManageDtlVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @param commandMap        Map
      * @return 출력페이지정보 등록화면 호출시 "sym/prm/EgovProgramChangRequstStre",
      *         출력페이지정보 등록처리시 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
@@ -359,7 +357,7 @@ public class CumsProgrmManageController {
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstStre.do")
     public String insertProgrmChangeRequst(
     		@RequestParam Map<?, ?> commandMap,
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		BindingResult bindingResult,
     		ModelMap model)
             throws Exception {
@@ -376,22 +374,22 @@ public class CumsProgrmManageController {
         String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
         if(sCmd.equals("insert")){
     		//beanValidator 처리
-	        beanValidator.validate(progrmManageDtlVO, bindingResult);
+	        beanValidator.validate(cumsProgrmManageDtlVO, bindingResult);
 			if (bindingResult.hasErrors()){
 				sLocationUrl = "egovframework/com/sym/prm/EgovProgramChangRequstStre";
 				return sLocationUrl;
 			}
-			if(progrmManageDtlVO.getChangerqesterCn()==null || progrmManageDtlVO.getChangerqesterCn().equals("")){progrmManageDtlVO.setChangerqesterCn("");}
-			if(progrmManageDtlVO.getRqesterProcessCn()==null || progrmManageDtlVO.getRqesterProcessCn().equals("")){progrmManageDtlVO.setRqesterProcessCn("");}
-			progrmManageService.insertProgrmChangeRequst(progrmManageDtlVO);
+			if(cumsProgrmManageDtlVO.getChangerqesterCn()==null || cumsProgrmManageDtlVO.getChangerqesterCn().equals("")){cumsProgrmManageDtlVO.setChangerqesterCn("");}
+			if(cumsProgrmManageDtlVO.getRqesterProcessCn()==null || cumsProgrmManageDtlVO.getRqesterProcessCn().equals("")){cumsProgrmManageDtlVO.setRqesterProcessCn("");}
+			cumsProgrmManageService.insertProgrmChangeRequst(cumsProgrmManageDtlVO);
 	    	resultMsg = egovMessageSource.getMessage("success.common.insert");
 	        sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstSelect.do";
         }else{
 	        /* MAX요청번호 조회 */
-	    	ProgrmManageDtlVO tmp_vo = progrmManageService.selectProgrmChangeRequstNo(progrmManageDtlVO);
+        	CumsProgrmManageDtlVO tmp_vo = cumsProgrmManageService.selectProgrmChangeRequstNo(cumsProgrmManageDtlVO);
 			int _tmp_no = tmp_vo.getRqesterNo();
-			progrmManageDtlVO.setRqesterNo(_tmp_no);
-			progrmManageDtlVO.setRqesterPersonId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
+			cumsProgrmManageDtlVO.setRqesterNo(_tmp_no);
+			cumsProgrmManageDtlVO.setRqesterPersonId((user == null || user.getUniqId() == null) ? "" : user.getUniqId());
             sLocationUrl = "egovframework/com/sym/prm/EgovProgramChangRequstStre";
         }
     	model.addAttribute("resultMsg", resultMsg);
@@ -400,13 +398,13 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램변경 요청을 수정 한다.
-     * @param progrmManageDtlVO  ProgrmManageDtlVO
+     * @param cumsProgrmManageVO  CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstDetailSelectUpdt.do")
     public String updateProgrmChangeRequst(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		BindingResult bindingResult,
     		ModelMap model)
             throws Exception {
@@ -421,23 +419,23 @@ public class CumsProgrmManageController {
 		//로그인 객체 선언
 		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 		//beanValidator 처리
-        beanValidator.validate(progrmManageDtlVO, bindingResult);
+        beanValidator.validate(cumsProgrmManageDtlVO, bindingResult);
 		if (bindingResult.hasErrors()){
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangRequstDetailSelect.do";
 			return sLocationUrl;
 		}
 
 		//KISA 보안약점 조치 (2018-10-29, 윤창원)
-    	if(EgovStringUtil.isNullToString(progrmManageDtlVO.getRqesterPersonId()).equals(loginVO == null ? "" : EgovStringUtil.isNullToString(loginVO.getId()))){
-			if(progrmManageDtlVO.getChangerqesterCn()==null || progrmManageDtlVO.getChangerqesterCn().equals("")){progrmManageDtlVO.setChangerqesterCn(" ");}
-			if(progrmManageDtlVO.getRqesterProcessCn()==null || progrmManageDtlVO.getRqesterProcessCn().equals("")){progrmManageDtlVO.setRqesterProcessCn(" ");}
-	        progrmManageService.updateProgrmChangeRequst(progrmManageDtlVO);
+    	if(EgovStringUtil.isNullToString(cumsProgrmManageDtlVO.getRqesterPersonId()).equals(loginVO == null ? "" : EgovStringUtil.isNullToString(loginVO.getId()))){
+			if(cumsProgrmManageDtlVO.getChangerqesterCn()==null || cumsProgrmManageDtlVO.getChangerqesterCn().equals("")){cumsProgrmManageDtlVO.setChangerqesterCn(" ");}
+			if(cumsProgrmManageDtlVO.getRqesterProcessCn()==null || cumsProgrmManageDtlVO.getRqesterProcessCn().equals("")){cumsProgrmManageDtlVO.setRqesterProcessCn(" ");}
+	        cumsProgrmManageService.updateProgrmChangeRequst(cumsProgrmManageDtlVO);
     		resultMsg = egovMessageSource.getMessage("success.common.update");
 	        sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstSelect.do";
     	}else{
     		resultMsg = "수정이 실패하였습니다. 변경요청 수정은 변경요청자만 수정가능합니다.";
-            progrmManageDtlVO.setTmpProgrmNm(progrmManageDtlVO.getProgrmFileNm());
-            progrmManageDtlVO.setTmpRqesterNo(progrmManageDtlVO.getRqesterNo());
+    		cumsProgrmManageDtlVO.setTmpProgrmNm(cumsProgrmManageDtlVO.getProgrmFileNm());
+    		cumsProgrmManageDtlVO.setTmpRqesterNo(cumsProgrmManageDtlVO.getRqesterNo());
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangRequstDetailSelect.do";
     	}
     	model.addAttribute("resultMsg", resultMsg);
@@ -446,13 +444,13 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램변경 요청을 삭제 한다.
-     * @param progrmManageDtlVO  ProgrmManageDtlVO
+     * @param cumsProgrmManageVO  CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstSelect.do"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstDelete.do")
     public String deleteProgrmChangeRequst(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		ModelMap model)
             throws Exception {
         String sLocationUrl = null;
@@ -465,10 +463,10 @@ public class CumsProgrmManageController {
 		//로그인 객체 선언
 		LoginVO loginVO = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 		//KISA 보안약점 조치 (2018-10-29, 윤창원)
-    	if(EgovStringUtil.isNullToString(progrmManageDtlVO.getRqesterPersonId()).equals(loginVO == null ? "" : EgovStringUtil.isNullToString(loginVO.getId()))){
-    	//progrmManageDtlVO.setRqesterPersonId(user.getId());
+    	if(EgovStringUtil.isNullToString(cumsProgrmManageDtlVO.getRqesterPersonId()).equals(loginVO == null ? "" : EgovStringUtil.isNullToString(loginVO.getId()))){
+    	//cumsProgrmManageVO.setRqesterPersonId(user.getId());
     		model.addAttribute("resultMsg", egovMessageSource.getMessage("success.common.delete"));
-	        progrmManageService.deleteProgrmChangeRequst(progrmManageDtlVO);
+	        cumsProgrmManageService.deleteProgrmChangeRequst(cumsProgrmManageDtlVO);
 	        sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstSelect.do";
     	}else{
     		model.addAttribute("resultMsg", egovMessageSource.getMessage("comSymPrm.progrmManageController.checkRqesterPersonId")); //삭제에 실패하였습니다. 변경요청자만 삭제가능합니다.
@@ -510,10 +508,10 @@ public class CumsProgrmManageController {
  		 searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
  		 searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-         List<?> list_changerequst = progrmManageService.selectChangeRequstProcessList(searchVO);
+         List<?> list_changerequst = cumsProgrmManageService.selectChangeRequstProcessList(searchVO);
          model.addAttribute("list_changerequst", list_changerequst);
 
-         int totCnt = progrmManageService.selectChangeRequstProcessListTotCnt(searchVO);
+         int totCnt = cumsProgrmManageService.selectChangeRequstProcessListTotCnt(searchVO);
   		 paginationInfo.setTotalRecordCount(totCnt);
          model.addAttribute("paginationInfo", paginationInfo);
 
@@ -522,13 +520,13 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램변경 요청에 대한 처리 사항을 상세조회한다.
-     * @param progrmManageDtlVO ProgrmManageDtlVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstProcessDetailSelect.do")
     public String selectProgrmChangRequstProcess(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		ModelMap model)
             throws Exception {
          // 0. Spring Security 사용자권한 처리
@@ -537,13 +535,13 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	 }
-         if(progrmManageDtlVO.getProgrmFileNm()==null){
-	    	 String _FileNm = progrmManageDtlVO.getTmpProgrmNm();
-	         progrmManageDtlVO.setProgrmFileNm(_FileNm);
-	         int _Tmp_no = progrmManageDtlVO.getTmpRqesterNo();
-	         progrmManageDtlVO.setRqesterNo(_Tmp_no);
+         if(cumsProgrmManageDtlVO.getProgrmFileNm()==null){
+	    	 String _FileNm = cumsProgrmManageDtlVO.getTmpProgrmNm();
+	    	 cumsProgrmManageDtlVO.setProgrmFileNm(_FileNm);
+	         int _Tmp_no = cumsProgrmManageDtlVO.getTmpRqesterNo();
+	         cumsProgrmManageDtlVO.setRqesterNo(_Tmp_no);
          }
-         ProgrmManageDtlVO resultVO = progrmManageService.selectProgrmChangeRequst(progrmManageDtlVO);
+         CumsProgrmManageDtlVO resultVO = cumsProgrmManageService.selectProgrmChangeRequst(cumsProgrmManageDtlVO);
          if(resultVO.getProcessDe() != null){
         	 resultVO.setProcessDe(resultVO.getProcessDe().trim());//2011.08.22
          }
@@ -553,20 +551,20 @@ public class CumsProgrmManageController {
 				(LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
 	         resultVO.setOpetrId(user == null ? "" : EgovStringUtil.isNullToString(user.getId()));
          }
-         model.addAttribute("progrmManageDtlVO", resultVO);
+         model.addAttribute("cumsProgrmManageVO", resultVO);
          return "egovframework/com/sym/prm/EgovProgramChangRequstProcessDetailSelectUpdt";
     }
 
     /**
      * 프로그램변경요청처리 내용을 수정 한다.
-     * @param progrmManageDtlVO ProgrmManageDtlVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
      * @exception Exception
      */
     @SuppressWarnings("unused")
 	@RequestMapping(value="/sym/prm/CumsProgramChangRequstProcessDetailSelectUpdt.do")
     public String updateProgrmChangRequstProcess(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		BindingResult bindingResult,
     		ModelMap model)
             throws Exception {
@@ -579,7 +577,7 @@ public class CumsProgrmManageController {
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	}
 
-        beanValidator.validate(progrmManageDtlVO, bindingResult);
+        beanValidator.validate(cumsProgrmManageDtlVO, bindingResult);
 		if (bindingResult.hasErrors()){
 			sLocationUrl = "forward:/sym/prm/EgovProgramChangRequstProcessDetailSelect.do";
 			return sLocationUrl;
@@ -589,24 +587,24 @@ public class CumsProgrmManageController {
 			(LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
     	
     	//KISA 보안약점 조치 (2018-10-29, 윤창원)
-    	if (progrmManageDtlVO.getOpetrId() != null) {
-	    	if(progrmManageDtlVO.getOpetrId().equals(user == null ? "" : EgovStringUtil.isNullToString(user.getId()))){
-				if(progrmManageDtlVO.getChangerqesterCn()==null || progrmManageDtlVO.getChangerqesterCn().equals("")){progrmManageDtlVO.setChangerqesterCn(" ");}
-				if(progrmManageDtlVO.getRqesterProcessCn()==null || progrmManageDtlVO.getRqesterProcessCn().equals("")){progrmManageDtlVO.setRqesterProcessCn(" ");}
-		        progrmManageService.updateProgrmChangeRequstProcess(progrmManageDtlVO);
+    	if (cumsProgrmManageDtlVO.getOpetrId() != null) {
+	    	if(cumsProgrmManageDtlVO.getOpetrId().equals(user == null ? "" : EgovStringUtil.isNullToString(user.getId()))){
+				if(cumsProgrmManageDtlVO.getChangerqesterCn()==null || cumsProgrmManageDtlVO.getChangerqesterCn().equals("")){cumsProgrmManageDtlVO.setChangerqesterCn(" ");}
+				if(cumsProgrmManageDtlVO.getRqesterProcessCn()==null || cumsProgrmManageDtlVO.getRqesterProcessCn().equals("")){cumsProgrmManageDtlVO.setRqesterProcessCn(" ");}
+		        cumsProgrmManageService.updateProgrmChangeRequstProcess(cumsProgrmManageDtlVO);
 		        model.addAttribute("resultMsg", egovMessageSource.getMessage("success.common.update"));
 	
-		        ProgrmManageDtlVO vo = new ProgrmManageDtlVO();
-		        vo = progrmManageService.selectRqesterEmail(progrmManageDtlVO);
+		        CumsProgrmManageDtlVO vo = new CumsProgrmManageDtlVO();
+		        vo = cumsProgrmManageService.selectRqesterEmail(cumsProgrmManageDtlVO);
 		        String sTemp = null;
 		        //KISA 보안약점 조치 (2018-10-29, 윤창원)
-		        if("A".equals(progrmManageDtlVO.getProcessSttus())){
+		        if("A".equals(cumsProgrmManageDtlVO.getProcessSttus())){
 		        	sTemp = egovMessageSource.getMessage("comSymPrm.progrmManageController.processSttusA"); //신청중
-		        }else if("P".equals(progrmManageDtlVO.getProcessSttus())){
+		        }else if("P".equals(cumsProgrmManageDtlVO.getProcessSttus())){
 		        	sTemp = egovMessageSource.getMessage("comSymPrm.progrmManageController.processSttusP"); //진행중
-		        }else if("R".equals(progrmManageDtlVO.getProcessSttus())){
+		        }else if("R".equals(cumsProgrmManageDtlVO.getProcessSttus())){
 		        	sTemp = egovMessageSource.getMessage("comSymPrm.progrmManageController.processSttusR"); //반려
-		        }else if("C".equals(progrmManageDtlVO.getProcessSttus())){
+		        }else if("C".equals(cumsProgrmManageDtlVO.getProcessSttus())){
 		        	sTemp = egovMessageSource.getMessage("comSymPrm.progrmManageController.processSttusC"); //처리완료
 		        }
 		    	// 프로그램 변경요청 사항을 이메일로  발송한다.(메일연동솔루션 활용)
@@ -620,8 +618,8 @@ public class CumsProgrmManageController {
 		        sLocationUrl = "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do";
 	    	}else{
 	    		model.addAttribute("resultMsg", egovMessageSource.getMessage("comSymPrm.progrmManageController.updateProgrmChangRequstProcess.fail")); //수정이 실패하였습니다. 변경요청처리 수정은 변경처리해당 담당자만 처리가능합니다.
-	            progrmManageDtlVO.setTmpProgrmNm(progrmManageDtlVO.getProgrmFileNm());
-	            progrmManageDtlVO.setTmpRqesterNo(progrmManageDtlVO.getRqesterNo());
+	            cumsProgrmManageDtlVO.setTmpProgrmNm(cumsProgrmManageDtlVO.getProgrmFileNm());
+	            cumsProgrmManageDtlVO.setTmpRqesterNo(cumsProgrmManageDtlVO.getRqesterNo());
 				sLocationUrl = "forward:/sym/prm/EgovProgramChangRequstProcessDetailSelect.do";
 	    	}
     	}
@@ -630,14 +628,14 @@ public class CumsProgrmManageController {
 
     /**
      * 프로그램변경요청처리를 삭제 한다.
-     * @param progrmManageDtlVO  ProgrmManageDtlVO
+     * @param cumsProgrmManageVO  CumsProgrmManageVO
      * @return 출력페이지정보 "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do"
      * @exception Exception
      */
     /*프로그램변경요청처리 삭제*/
     @RequestMapping(value="/sym/prm/CumsProgramChangRequstProcessDelete.do")
     public String deleteProgrmChangRequstProcess(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		ModelMap model)
             throws Exception {
          // 0. Spring Security 사용자권한 처리
@@ -646,7 +644,7 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	 }
-         progrmManageService.deleteProgrmChangeRequst(progrmManageDtlVO);
+         cumsProgrmManageService.deleteProgrmChangeRequst(cumsProgrmManageDtlVO);
 
          return "forward:/sym/prm/EgovProgramChangeRequstProcessListSelect.do";
     }
@@ -684,10 +682,10 @@ public class CumsProgrmManageController {
  		 searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
  		 searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-         List<?> list_changerequst = progrmManageService.selectProgrmChangeRequstList(searchVO);
+         List<?> list_changerequst = cumsProgrmManageService.selectProgrmChangeRequstList(searchVO);
          model.addAttribute("list_changerequst", list_changerequst);
 
-         int totCnt = progrmManageService.selectProgrmChangeRequstListTotCnt(searchVO);
+         int totCnt = cumsProgrmManageService.selectProgrmChangeRequstListTotCnt(searchVO);
   		 paginationInfo.setTotalRecordCount(totCnt);
          model.addAttribute("paginationInfo", paginationInfo);
 
@@ -697,13 +695,13 @@ public class CumsProgrmManageController {
     /*프로그램변경이력상세조회*/
     /**
      * 프로그램변경이력을 상세조회한다.
-     * @param progrmManageDtlVO ProgrmManageDtlVO
+     * @param cumsProgrmManageVO CumsProgrmManageVO
      * @return 출력페이지정보 "sym/prm/EgovProgramChgHstDetail"
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramChgHstListDetailSelect.do")
     public String selectProgramChgHstListDetail(
-    		@ModelAttribute("progrmManageDtlVO") ProgrmManageDtlVO progrmManageDtlVO,
+    		@ModelAttribute("cumsProgrmManageDtlVO") CumsProgrmManageDtlVO cumsProgrmManageDtlVO,
     		ModelMap model)
             throws Exception {
          // 0. Spring Security 사용자권한 처리
@@ -712,12 +710,12 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	 }
-         String _FileNm = progrmManageDtlVO.getTmpProgrmNm();
-         progrmManageDtlVO.setProgrmFileNm(_FileNm);
-         int _tmp_no = progrmManageDtlVO.getTmpRqesterNo();
-         progrmManageDtlVO.setRqesterNo(_tmp_no);
+         String _FileNm = cumsProgrmManageDtlVO.getTmpProgrmNm();
+         cumsProgrmManageDtlVO.setProgrmFileNm(_FileNm);
+         int _tmp_no = cumsProgrmManageDtlVO.getTmpRqesterNo();
+         cumsProgrmManageDtlVO.setRqesterNo(_tmp_no);
 
-         ProgrmManageDtlVO resultVO = progrmManageService.selectProgrmChangeRequst(progrmManageDtlVO);
+         CumsProgrmManageDtlVO resultVO = cumsProgrmManageService.selectProgrmChangeRequst(cumsProgrmManageDtlVO);
          model.addAttribute("resultVO", resultVO);
          return "egovframework/com/sym/prm/EgovProgramChgHstDetail";
     }
@@ -753,10 +751,10 @@ public class CumsProgrmManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-        List<?> list_progrmmanage = progrmManageService.selectProgrmList(searchVO);
+        List<?> list_progrmmanage = cumsProgrmManageService.selectProgrmList(searchVO);
         model.addAttribute("list_progrmmanage", list_progrmmanage);
 
-        int totCnt = progrmManageService.selectProgrmListTotCnt(searchVO);
+        int totCnt = cumsProgrmManageService.selectProgrmListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
 
@@ -795,10 +793,10 @@ public class CumsProgrmManageController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-        List<?> list_progrmmanage = progrmManageService.selectProgrmList(searchVO);
+        List<?> list_progrmmanage = cumsProgrmManageService.selectProgrmList(searchVO);
         model.addAttribute("list_progrmmanage", list_progrmmanage);
 
-        int totCnt = progrmManageService.selectProgrmListTotCnt(searchVO);
+        int totCnt = cumsProgrmManageService.selectProgrmListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
         model.addAttribute("paginationInfo", paginationInfo);
 

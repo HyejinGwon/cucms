@@ -37,7 +37,7 @@
 <link href="<c:url value="/css/egovframework/com/com.css"/>" rel="stylesheet" type="text/css">
 <link href="<c:url value="/css/egovframework/com/button.css"/>" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
-<validator:javascript formName="progrmManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<validator:javascript formName="cumsProgrmManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
 <script language="javascript1.2" type="text/javaScript">
 <!--
 /* ********************************************************
@@ -69,7 +69,7 @@ function deleteProgramListManage(form) {
  ******************************************************** */
 function selectList(){
 	
-    var varForm = document.getElementById("progrmManageVO");
+    var varForm = document.getElementById("cumsProgrmManageVO");
     varForm.action = "<c:url value='/sym/prm/CumsProgramListManageSelect.do' />";
     varForm.submit();
 
@@ -86,7 +86,7 @@ function selectList(){
 <c:set var="vurl"><spring:message code="comSymPrm.programListDetailSelectUpdt.url"/></c:set>
 
 <noscript class="noScriptTitle"><spring:message code="common.noScriptTitle.msg" /></noscript>
-<form:form modelAttribute="progrmManageVO" method="post">
+<form:form modelAttribute="cumsProgrmManageVO" method="post">
     <!-- 검색조건 유지 -->
     <input type="hidden" name="searchCondition" value="<c:out value='${searchVO.searchCondition}'/>"/>
     <input type="hidden" name="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>"/>
@@ -143,7 +143,7 @@ function selectList(){
 	<div class="btn">
 		<span class="btn_s"><a onclick="selectList(); return false;"><spring:message code="button.list"/></a></span><!-- 목록 -->
 		<input class="s_submit" type="submit" value='<spring:message code="button.update" />' onclick="updateProgramListManage(document.forms[0]); return false;" /><!-- 수정 -->
-		<span class="btn_s"><a href="<c:url value='/sym/prm/CumsProgramListManageDelete.do'/>?progrmFileNm=<c:out value="${progrmManageVO.progrmFileNm  }"/>" onclick="deleteProgramListManage(document.forms[0]); return false;"><spring:message code="button.delete" /></a></span><!-- 삭제 -->
+		<span class="btn_s"><a href="<c:url value='/sym/prm/CumsProgramListManageDelete.do'/>?progrmFileNm=<c:out value="${cumsProgrmManageVO.progrmFileNm  }"/>" onclick="deleteProgramListManage(document.forms[0]); return false;"><spring:message code="button.delete" /></a></span><!-- 삭제 -->
 	</div>
 	<div style="clear:both;"></div>
 </div>

@@ -37,7 +37,7 @@
 <link href="<c:url value="/css/egovframework/com/com.css"/>" rel="stylesheet" type="text/css">
 <link href="<c:url value="/css/egovframework/com/button.css"/>" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<c:url value="/validator.do" />"></script>
-<validator:javascript formName="progrmManageVO" staticJavascript="false" xhtml="true" cdata="false"/>
+<validator:javascript formName="" staticJavascript="false" xhtml="true" cdata="false"/>
 <script language="javascript1.2" type="text/javaScript">
 <!--
 /* ********************************************************
@@ -86,7 +86,7 @@ function selectList(){
   <tr>
     <td width="700">
 <!-- ********** 여기서 부터 본문 내용 *************** -->
-<form:form modelAttribute="progrmManageVO" method="post" >
+<form:form modelAttribute="cumsProgrmManageVO" method="post" >
 
 <div class="wTableFrm">
 	<!-- 타이틀 -->
