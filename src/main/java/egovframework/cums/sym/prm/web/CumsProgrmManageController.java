@@ -24,8 +24,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 /**
@@ -76,11 +78,7 @@ public class CumsProgrmManageController {
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramListDetailSelect.do")
-    public String selectProgrm(
-    		@RequestParam("tmp_progrmNm") String tmp_progrmNm ,
-   		    @ModelAttribute("searchVO") ComDefaultVO searchVO,
-    		ModelMap model)
-            throws Exception {
+    public String selectProgrm(@RequestParam("tmp_progrmNm") String tmp_progrmNm ,@ModelAttribute("searchVO") ComDefaultVO searchVO,ModelMap model)  throws Exception {
         // 0. Spring Security 사용자권한 처리
     	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
     	if(!isAuthenticated) {
@@ -181,12 +179,8 @@ public class CumsProgrmManageController {
      * @exception Exception
      */
     @RequestMapping(value="/sym/prm/CumsProgramListRegist.do")
-    public String insertProgrmList(
-    		@RequestParam Map<?, ?> commandMap,
-    		@ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO,
-			BindingResult bindingResult,
-			ModelMap model)
-            throws Exception {
+    public String insertProgrmList(@RequestParam Map<?, ?> commandMap, @ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO, BindingResult bindingResult,
+			                      ModelMap model) throws Exception {
         String resultMsg = "";
         String sLocationUrl = null;
     	// 0. Spring Security 사용자권한 처리
@@ -195,8 +189,9 @@ public class CumsProgrmManageController {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "egovframework/com/uat/uia/EgovLoginUsr";
     	}
-
+    	System.out.println("#################commandMap : "+ commandMap);
         String sCmd = commandMap.get("cmd") == null ? "" : (String)commandMap.get("cmd");
+//    	String sCmd = commandMap.get("flag").toString();
         if(sCmd.equals("insert")){
 	        beanValidator.validate(cumsProgrmManageVO, bindingResult);
 			if (bindingResult.hasErrors()){
@@ -222,10 +217,7 @@ public class CumsProgrmManageController {
      */
     /*프로그램목록수정*/
     @RequestMapping(value="/sym/prm/CumsProgramListDetailSelectUpdt.do")
-    public String updateProgrmList(
-    		@ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO,
-    		BindingResult bindingResult,
-    		ModelMap model)
+    public String updateProgrmList(@ModelAttribute("cumsProgrmManageVO") CumsProgrmManageVO cumsProgrmManageVO, BindingResult bindingResult,ModelMap model)
             throws Exception {
 		String resultMsg = "";
         String sLocationUrl = null;
@@ -244,7 +236,7 @@ public class CumsProgrmManageController {
 		if(cumsProgrmManageVO.getProgrmDc()==null || cumsProgrmManageVO.getProgrmDc().equals("")){cumsProgrmManageVO.setProgrmDc(" ");}
 		cumsProgrmManageService.updateProgrm(cumsProgrmManageVO);
 		resultMsg = egovMessageSource.getMessage("success.common.update");
-        sLocationUrl = "forward:/sym/prm/EgovProgramListManageSelect.do";
+        sLocationUrl = "forward:/sym/prm/CumsProgramListManageSelect.do";
     	model.addAttribute("resultMsg", resultMsg);
 		return sLocationUrl;
     }
@@ -271,7 +263,7 @@ public class CumsProgrmManageController {
         cumsProgrmManageService.deleteProgrm(cumsProgrmManageVO);
         resultMsg = egovMessageSource.getMessage("success.common.delete");
     	model.addAttribute("resultMsg", resultMsg);
-        return "forward:/sym/prm/EgovProgramListManageSelect.do";
+        return "forward:/sym/prm/CumsProgramListManageSelect.do";
     }
 
     /**

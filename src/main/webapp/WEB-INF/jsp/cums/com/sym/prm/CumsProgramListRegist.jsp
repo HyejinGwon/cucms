@@ -1,19 +1,12 @@
-<!DOCTYPE html>
 <%--
  /**
-  * @Class Name : EgovProgramListRegist.jsp
+  * @Class Name : CumsProgramListRegist.jsp
   * @Description : 프로그램목록 등록 화면
   * @Modification Information
   * @
-  * @  수정일              수정자            수정내용
+  * @  수정일       수정자             수정내용
   * @ ----------   --------   ---------------------------
-  * @ 2009.03.10   이용              최초 생성
-  *   2018.09.03   신용호            공통컴포넌트 3.8 개선
-  *
-  *  @author 공통서비스 개발팀 이용
-  *  @since 2009.03.10
-  *  @version 1.0
-  *  @see
+  *	  2023.03.23    권혜진	   all-in-one 커스터마이징
   *
   */
   /* Image Path 설정 */
@@ -27,32 +20,113 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %>
-<c:set var="ImgUrl" value="/images/egovframework/com/sym/prm/"/>
-<c:set var="CssUrl" value="/css/egovframework/com/sym/prm/"/>
-<html lang="ko">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
-<title><spring:message code="comSymPrm.programListRegist.title" /></title><!-- 프로그램목록등록 -->
-<link href="<c:url value="/css/egovframework/com/com.css"/>" rel="stylesheet" type="text/css">
-<link href="<c:url value="/css/egovframework/com/button.css"/>" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="<c:url value="/validator.do" />"></script>
-<validator:javascript formName="" staticJavascript="false" xhtml="true" cdata="false"/>
-<script language="javascript1.2" type="text/javaScript">
-<!--
+<%-- <%@ taglib prefix="validator" uri="http://www.springmodules.org/tags/commons-validator" %> --%>
+<%-- <c:set var="ImgUrl" value="/images/egovframework/com/sym/prm/"/> --%>
+<%-- <c:set var="CssUrl" value="/css/egovframework/com/sym/prm/"/> --%>
+<%-- <link href="<c:url value="/css/egovframework/com/com.css"/>" rel="stylesheet" type="text/css"> --%>
+<%-- <link href="<c:url value="/css/egovframework/com/button.css"/>" rel="stylesheet" type="text/css"> --%>
+<c:set var="vprogrmFileNm"><spring:message code="comSymPrm.programListRegist.progrmFileNm"/></c:set>
+<c:set var="vprogrmStrePath"><spring:message code="comSymPrm.programListRegist.progrmStrePath"/></c:set>
+<c:set var="vprogrmKoreanNm"><spring:message code="comSymPrm.programListRegist.progrmKoreanNm"/></c:set>
+<c:set var="vprogrmDc"><spring:message code="comSymPrm.programListRegist.progrmDc"/></c:set>
+<c:set var="vurl"><spring:message code="comSymPrm.programListDetailSelectUpdt.url"/></c:set>
+
+<main class="mt-5 pt-5">
+	<div class="container-fluid px-4">
+		<h1 class="mt-4"><spring:message code="comSymPrm.programListRegist.pageTop.title"/></h1>
+		<div class="card mb-4">
+			<div class="card-body">
+				<noscript class="noScriptTitle"><spring:message code="common.noScriptTitle.msg" /></noscript>
+				<form id="progrmInfo" method="post">
+				<!-- 검색조건 유지 -->
+				    <input type="hidden" name="searchCondition" value="<c:out value='${searchVO.searchCondition}'/>"/>
+				    <input type="hidden" name="searchKeyword" value="<c:out value='${searchVO.searchKeyword}'/>"/>
+				    <input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}' default='1' />"/>
+				
+					<div class="mb-3 mt-3">
+						<label for="progrmFileNm" class="form-label"><spring:message code="comSymPrm.programListDetailSelectUpdt.progrmFileNm"/></label> 
+						<input type="text" class="form-control" id="progrmFileNm" name="progrmFileNm" maxlength="50"  title="${vprogrmFileNm}" ><!-- 프로그램파일명 -->
+					</div>
+					<div class="mb-3">
+						<label for="progrmStrePath" class="form-label"><spring:message code="comSymPrm.programListDetailSelectUpdt.progrmStrePath"/></label> 
+						<input type="text" class="form-control" id="progrmStrePath" name="progrmStrePath" maxlength="60" title="${vprogrmStrePath}" ><!-- 저장경로 -->
+					</div>
+					<div class="mb-3">
+						<label for="content" class="form-label"><spring:message code="comSymPrm.programListDetailSelectUpdt.progrmKoreanNm"/></label>
+						<input type="text" class="form-control" id="progrmKoreanNm" name="progrmKoreanNm" maxlength="60" title="${vprogrmKoreanNm}" ><!-- 한글명 -->
+					</div>
+					<div class="mb-3">
+						<label for="progrmUrl" class="form-label"><spring:message code="comSymPrm.programListDetailSelectUpdt.url"/></label>
+						<input type="text" class="form-control" id="URL" name="URL" maxlength="60" title="${vurl}" ><!-- URL -->
+					</div>
+					<div class="mb-3">
+						<label for="writer" class="form-label"><spring:message code="comSymPrm.programListDetailSelectUpdt.progrmDc"/></label>
+						<input type="textarea" class="form-control" id="progrmDc" name="progrmDc" title="${vprogrmDc}" ><!-- 프로그램설명 -->
+						<input name="cmd" type="hidden" value="<c:out value='insert'/>"/>
+					</div>
+					<button class="btn btn-outline-secondary" id="btn_list"><spring:message code="button.list"/></button>
+					<button class="btn btn-outline-success" id="btn_regist"><spring:message code="button.save" /></button>
+<%-- 					<button class="btn btn-outline-danger" id="btn_delete"><spring:message code="button.delete" /></button> --%>
+				</form>
+			</div>
+		</div>
+	</div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+
 /* ********************************************************
  * 입력 처리 함수
  ******************************************************** */
-function insertProgramListManage(form) {
-	if(confirm("<spring:message code="common.save.msg"/>")){
-		if(!validateProgrmManageVO(form)){
-			return;
-		}else{
-
-			form.submit();
-		}
+ $(document).on('click', '#btn_regist', function(e) {
+	 var params = {
+			  progrmFileNm   : $("#progrmFileNm").val()
+			, progrmStrePath : $("#progrmStrePath").val()
+			, progrmKoreanNm : $("#progrmKoreanNm").val()
+			, URL            : $("#URL").val()
+			, progrmDc       : $("#progrmDc").val()
+			, flag            : "insert"
 	}
-}
+    if (confirm("등록하시겠습니까 ?") == true) {
+         $("#progrmInfo").attr("action", "/sym/prm/CumsProgramListRegist.do");
+         $("#progrmInfo").submit();
+		
+		
+// 		$.ajax({
+// 	        url : "/sym/prm/CumsProgramListRegist.do",
+// 	        type : "POST",
+// 	        dataType : "json",
+// 	        data : JSON.stringify(params),
+// 	        contentType : "application/json",
+// 	        beforeSend : function() {
+// 	        },
+// 	        success : function(data) {
+// 	            console.log(data);
+// 	        },
+// 	        error : function(request, status, error) {
+// 	            alert("list search fail :: error code: "
+// 	            + request.status + "\n" + "error message: "
+// 	            + error + "\n");
+// 	        }
+// 	    });
+		
+    } else {
+        return;
+    }
+ });
+ 
+ /* ********************************************************
+  * 목록조회 함수
+  ******************************************************** 
+ */
+ $("#btn_list").click(function previous() {
+ 	$("#progrmInfo").attr("action", "/sym/prm/CumsProgramListManageSelect.do?");
+     $("#progrmInfo").submit();
+
+ });
+ 
+ <!--
 /* ********************************************************
  * 목록조회 함수
  ******************************************************** */
@@ -72,84 +146,4 @@ function selectList(){
 <c:if test="${!empty resultMsg}">alert("${resultMsg}");</c:if>
 -->
 </script>
-</head>
-<body>
-<c:set var="vprogrmFileNm"><spring:message code="comSymPrm.programListRegist.progrmFileNm"/></c:set>
-<c:set var="vprogrmStrePath"><spring:message code="comSymPrm.programListRegist.progrmStrePath"/></c:set>
-<c:set var="vprogrmKoreanNm"><spring:message code="comSymPrm.programListRegist.progrmKoreanNm"/></c:set>
-<c:set var="vprogrmDc"><spring:message code="comSymPrm.programListRegist.progrmDc"/></c:set>
-<c:set var="vurl"><spring:message code="comSymPrm.programListDetailSelectUpdt.url"/></c:set>
-
-<noscript class="noScriptTitle"><spring:message code="common.noScriptTitle.msg" /></noscript>
-<div id="border" style="width:730px">
-<table border="0">
-  <tr>
-    <td width="700">
-<!-- ********** 여기서 부터 본문 내용 *************** -->
-<form:form modelAttribute="cumsProgrmManageVO" method="post" >
-
-<div class="wTableFrm">
-	<!-- 타이틀 -->
-	<h2><spring:message code="comSymPrm.programListRegist.pageTop.title" /></h2><!-- 프로그램목록 등록 -->
-
-	<!-- 등록폼 -->
-	<table class="wTable">
-		<colgroup>
-			<col style="width:20%" />
-			<col style="" />
-		</colgroup>
-		<tr>
-			<th><spring:message code="comSymPrm.programListRegist.progrmFileNm"/><span class="pilsu">*</span></th><!-- 프로그램파일명 -->
-			<td class="left">
-			    <form:input path="progrmFileNm" size="50"  maxlength="50" id="F1" title="${vprogrmFileNm}"/><!-- 프로그램파일명 -->
-      			<form:errors path="progrmFileNm" />
-			</td>
-		</tr>
-		<tr>
-			<th><spring:message code="comSymPrm.programListRegist.progrmStrePath"/><span class="pilsu">*</span></th><!-- 저장경로 -->
-			<td class="left">
-			    <form:input path="progrmStrePath"  size="60"   maxlength="60" title="${vprogrmStrePath}"/><!-- 저장경로 -->
-      			<form:errors path="progrmStrePath" />
-			</td>
-		</tr>
-		<tr>
-			<th><spring:message code="comSymPrm.programListRegist.progrmKoreanNm"/> <span class="pilsu">*</span></th><!-- 한글명 -->
-			<td class="left">
-			    <form:input path="progrmKoreanNm" size="60"  maxlength="60" title="${vprogrmKoreanNm}"/><!-- 한글명 -->
-      			<form:errors path="progrmKoreanNm"/>
-			</td>
-		</tr>
-		<tr>
-			<th><spring:message code="comSymPrm.programListRegist.url"/> <span class="pilsu">*</span></th>
-			<td class="left">
-			    <form:input path="URL" size="60"    maxlength="60" title="${vurl}"/>
-      			<form:errors path="URL"/>
-			</td>
-		</tr>
-		<tr>
-			<th><spring:message code="comSymPrm.programListRegist.progrmDc"/></th><!-- 프로그램설명 -->
-			<td class="left">
-			    <form:textarea path="progrmDc" rows="14" cols="75" cssClass="txaClass" title="${vprogrmDc}"/><!-- 프로그램설명 -->
-      			<form:errors path="progrmDc"/>
-			</td>
-		</tr>
-	</table>
-
-	<!-- 하단 버튼 -->
-	<div class="btn">
-		<input class="s_submit" type="submit" value='<spring:message code="button.save" />' onclick="insertProgramListManage(document.forms[0]); return false;" /><!-- 저장 -->
-		<span class="btn_s"><a href="<c:url value='/sym/prm/CumsProgramListManageSelect.do'/>" onclick="selectList(); return false;"><spring:message code="button.list" /></a></span><!-- 목록 -->
-	</div>
-	<div style="clear:both;"></div>
-</div>
-
-<input name="cmd" type="hidden" value="<c:out value='insert'/>"/>
-</form:form>
-<!-- ********** 여기까지 내용 *************** -->
-</td>
-</tr>
-</table>
-</DIV>
-</body>
-</html>
 

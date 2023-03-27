@@ -87,7 +87,7 @@ public class EgovComUtlController {
 	 */
 	@RequestMapping("/validator.do")
 	public String validate(){
-		return "egovframework/com/cmm/validator";
+		return "cums/com/cmm/validator";
 	}
 
 }
