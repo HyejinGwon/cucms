@@ -10,6 +10,7 @@
  		<form name="progrmManageForm" action ="<c:url value='/sym/prm/CumsProgramListManageSelect.do' />" method="post">
 		<input name="pageIndex" type="hidden" value="<c:out value='${searchVO.pageIndex}'/>"/>
 		<input name="checkedProgrmFileNmForDel" type="hidden" />
+		
 		<div class="card mb-4">
 			<div class="card-header">
 				<div class="input-group mb-3">

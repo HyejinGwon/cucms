@@ -23,15 +23,16 @@
 		     , B.URL
 		  FROM COMTNMENUINFO A  /* 메뉴 정보 TBL */
 		     , COMTNPROGRMLIST B /* 프로그램목록 TBL */
-	     WHERE A.MENU_NO IN ('6680000' -- 프로그램관리
-						    ,'6140000' -- 메뉴관리
-						    ,'6150000' -- 메뉴생성관리
-						    ,'4010000' -- 게시판속성관리
-						    ,'4020000' -- 게시판사용정보
-						    ,'2020000' -- 권한그룹관리
+	     WHERE A.MENU_NO IN ('6680000' -- 프로그램관리 /sym/prm/CumsProgramListManageSelect.do
+						    ,'6640000' -- 메뉴관리리스트 /sym/mnu/mpm/CumsMenuManageSelect.do
+						    ,'6650000' -- 메뉴생성[사용]관리 /sym/mnu/mcm/CumsMenuCreatManageSelect.do
+						    ,'4510000' -- 게시판속성관리 /cop/bbs/CumsSelectBBSMasterInfs.do
+						    ,'4520000' -- 게시판사용정보 /cop/com/CumsSelectBBSUseInfs.do
+						    ,'2510000' -- 권한관리 /sec/ram/CumsAuthorList.do
+						    ,'2520000' -- 권한그룹관리 /sec/rgm/CumsAuthorGroupList.do
 						    )
 		   AND A.PROGRM_FILE_NM = B.PROGRM_FILE_NM 
-	     ORDER BY A.MENU_ORDR
+	     ORDER BY A.UPPER_MENU_NO, A.MENU_ORDR
 		
 	</select>
 
