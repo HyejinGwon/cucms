@@ -92,7 +92,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/insertBBSMasterView.do")
+    @RequestMapping("/cop/bbs/egovinsertBBSMasterView.do")
     public String insertBBSMasterView(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
 		BoardMasterVO boardMaster = new BoardMasterVO();
 		//공통코드(게시판유형)
@@ -127,7 +127,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/insertBBSMaster.do")
+    @RequestMapping("/cop/bbs/egovinsertBBSMaster.do")
     public String insertBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
 	    BindingResult bindingResult, ModelMap model) throws Exception {
     	
@@ -170,7 +170,7 @@ public class EgovBBSMasterController {
      * @param model
      * @return
      * @throws Exception
-     */
+     
     @IncludedInfo(name="게시판관리",order = 180 ,gid = 40)
     @RequestMapping("/cop/bbs/selectBBSMasterInfs.do")
     public String selectBBSMasterInfs(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
@@ -198,7 +198,7 @@ public class EgovBBSMasterController {
 
 		return "egovframework/com/cop/bbs/EgovBBSMasterList";
     }
-    
+    */
     /**
      * 블로그에 대한 목록을 조회한다.
      * 
@@ -208,7 +208,7 @@ public class EgovBBSMasterController {
      * @throws Exception
      */
     @IncludedInfo(name="블로그관리", order = 170 ,gid = 40)
-    @RequestMapping("/cop/bbs/selectBlogList.do")
+    @RequestMapping("/cop/bbs/egovselectBlogList.do")
     public String selectBlogMasterList(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
     	
     	LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
@@ -253,7 +253,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/insertBlogMasterView.do")
+    @RequestMapping("/cop/bbs/egovinsertBlogMasterView.do")
     public String insertBlogMasterView(@ModelAttribute("searchVO") BlogVO blogVO, ModelMap model) throws Exception {
     	model.addAttribute("blogMasterVO", new BlogVO());
 	return "egovframework/com/cop/bbs/EgovBlogRegist";
@@ -267,7 +267,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/selectChkBloguser.do")
+    @RequestMapping("/cop/bbs/egovselectChkBloguser.do")
     public ModelAndView chkBlogUser(@ModelAttribute("searchVO") BlogVO blogVO, ModelMap model) throws Exception {
     	LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
    	 	// KISA 보안취약점 조치 (2018-12-10, 신용호)
@@ -298,7 +298,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/insertBlogMaster.do")
+    @RequestMapping("/cop/bbs/egovinsertBlogMaster.do")
     public String insertBlogMaster(@ModelAttribute("searchVO") BlogVO blogVO, @ModelAttribute("blogMaster") Blog blog,
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -357,7 +357,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/selectBBSMasterDetail.do")
+    @RequestMapping("/cop/bbs/egovselectBBSMasterDetail.do")
     public String selectBBSMasterDetail(@ModelAttribute("searchVO") BoardMasterVO searchVO, ModelMap model) throws Exception {
 		BoardMasterVO vo = egovBBSMasterService.selectBBSMasterInf(searchVO);
 		model.addAttribute("result", vo);
@@ -383,7 +383,7 @@ public class EgovBBSMasterController {
      * @param model
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/updateBBSMasterView.do")
+    @RequestMapping("/cop/bbs/egovupdateBBSMasterView.do")
     public String updateBBSMasterView(@RequestParam("bbsId") String bbsId ,
             @ModelAttribute("searchVO") BoardMaster searchVO, ModelMap model)
             throws Exception {
@@ -427,7 +427,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/updateBBSMaster.do")
+    @RequestMapping("/cop/bbs/egovupdateBBSMaster.do")
     public String updateBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster,
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -465,7 +465,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/deleteBBSMaster.do")
+    @RequestMapping("/cop/bbs/egovdeleteBBSMaster.do")
     public String deleteBBSMaster(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, @ModelAttribute("boardMaster") BoardMaster boardMaster
 	    ) throws Exception {
 
@@ -488,7 +488,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/selectBlogListPortlet.do")
+    @RequestMapping("/cop/bbs/egovselectBlogListPortlet.do")
     public String selectBlogListPortlet(@ModelAttribute("searchVO") BlogVO blogVO, ModelMap model) throws Exception {
 	List<BlogVO> result = egovBBSMasterService.selectBlogListPortlet(blogVO);
 	
@@ -505,7 +505,7 @@ public class EgovBBSMasterController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/bbs/selectBBSListPortlet.do")
+    @RequestMapping("/cop/bbs/egovselectBBSListPortlet.do")
     public String selectBBSListPortlet(@ModelAttribute("searchVO") BoardMasterVO boardMasterVO, ModelMap model) throws Exception {
     	List<BoardMasterVO> result = egovBBSMasterService.selectBBSListPortlet(boardMasterVO);
     	

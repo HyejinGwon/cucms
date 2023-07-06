@@ -1,6 +1,5 @@
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -120,7 +119,7 @@
             </a>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header"></h6>
+                	<h6 class="collapse-header">Menu properties</h6>
                     <c:forEach var ="menu" items="${menuMngList}">
 	                    <a class="collapse-item" href="${menu.url}">${menu.menuNm}</a>
                     </c:forEach>
@@ -132,19 +131,15 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-wrench"></i>
+                <i class="fas fa-fw fa-cog"></i>
                 <span>권한관리</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <h6 class="collapse-header">Auth properties</h6>
                     <c:forEach var ="menu" items="${authrtMngList}">
-                        <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+                        <a class="collapse-item" href="${menu.url}">${menu.menuNm}</a>
                     </c:forEach>
-                    <a class="collapse-item" href="utilities-color.do">Colors</a>
-                    <a class="collapse-item" href="utilities-border.do">Borders</a>
-                    <a class="collapse-item" href="utilities-animation.do">Animations</a>
-                    <a class="collapse-item" href="utilities-other.do">Other</a>
                 </div>
             </div>
         </li>
@@ -153,14 +148,14 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree">
-                <i class="fas fa-fw fa-wrench"></i>
+                <i class="fas fa-fw fa-cog"></i>
                 <span>게시판관리</span>
             </a>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <h6 class="collapse-header">board properties</h6>
                     <c:forEach var ="menu" items="${bbsMngList}">
-                        <a class="collapse-item" href="tiles/${menu}.do">${menu}</a>
+                        <a class="collapse-item" href="${menu.url}">${menu.menuNm}</a>
                     </c:forEach>
                 </div>
             </div>

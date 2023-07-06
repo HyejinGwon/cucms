@@ -27,18 +27,13 @@ public class MenuPreparer implements ViewPreparer { // ViewPreparer 안에 있�
 	@Override
     public void execute(Request request, AttributeContext attributeContext) throws PreparerException {
         System.out.println("Tiles Menu @@@@@@@@@@@@@@@@@@@@@@@@");
-        List<String> bbsMngList = new ArrayList<String>();
-        List<String> authrtMngList = new ArrayList<String>();
-        
+        List<EgovMap> bbsMngList;
+        List<EgovMap> authrtMngList;
         List<EgovMap> menuMngList;
 		try {
 			menuMngList = service.retrieveMenuMngList();
-	        
-	        authrtMngList.add("권한그룹관리"); // 관리자, 직원, 방문사용자 등의 그룹을 관리
-	        authrtMngList.add("권한메뉴3");
-	        
-	        bbsMngList.add("게시판관리1");
-	        bbsMngList.add("게시판관리2");
+			authrtMngList = service.retrieveAuthrtMngList();
+			bbsMngList = service.retrieveBbsMngList();
 	        
 	        attributeContext.putAttribute("menuMngList", new Attribute(menuMngList), true);
 	        attributeContext.putAttribute("bbsMngList", new Attribute(bbsMngList), true);

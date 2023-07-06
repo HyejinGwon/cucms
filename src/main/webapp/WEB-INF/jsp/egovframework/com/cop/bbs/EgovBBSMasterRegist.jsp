@@ -1,4 +1,4 @@
-<%
+te<%
  /**
   * @Class Name : EgovBBSMasterRegist.jsp
   * @Description : EgovBBSMasterRegist 화면

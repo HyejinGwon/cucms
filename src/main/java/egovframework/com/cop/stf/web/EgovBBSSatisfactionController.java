@@ -69,7 +69,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/selectSatisfactionList.do")
+    @RequestMapping("/cop/stf/egovselectSatisfactionList.do")
     public String selectSatisfactionList(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, ModelMap model) throws Exception {
 
 	// 수정 처리된 후 만족도조사 등록 화면으로 처리되기 위한 구현
@@ -136,7 +136,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/anonymous/selectSatisfactionList.do")
+    @RequestMapping("/cop/stf/anonymous/egovselectSatisfactionList.do")
     public String selectAnonymousSatisfactionList(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, ModelMap model) throws Exception {
 
 	// 수정 처리된 후 만족도조사 등록 화면으로 처리되기 위한 구현
@@ -203,7 +203,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/insertSatisfaction.do")
+    @RequestMapping("/cop/stf/egovinsertSatisfaction.do")
     public String insertSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, 
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -243,7 +243,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/anonymous/insertSatisfaction.do")
+    @RequestMapping("/cop/stf/anonymous/egovinsertSatisfaction.do")
     public String insertAnonymousSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, 
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -277,7 +277,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/deleteSatisfaction.do")
+    @RequestMapping("/cop/stf/egovdeleteSatisfaction.do")
     public String deleteSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, ModelMap model) throws Exception {
 	@SuppressWarnings("unused")
 	LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
@@ -303,7 +303,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/anonymous/deleteSatisfaction.do")
+    @RequestMapping("/cop/stf/anonymous/egovdeleteSatisfaction.do")
     public String deleteAnonymousSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, ModelMap model) throws Exception {
 	
 	//-------------------------------
@@ -338,7 +338,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/selectSingleSatisfaction.do")
+    @RequestMapping("/cop/stf/egovselectSingleSatisfaction.do")
     public String selectSingleSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, ModelMap model) throws Exception {
 
 	//------------------------------------------
@@ -402,7 +402,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/anonymous/selectSingleSatisfaction.do")
+    @RequestMapping("/cop/stf/anonymous/egovselectSingleSatisfaction.do")
     public String selectAnonymousSingleSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, ModelMap model) throws Exception {
 
 	//------------------------------------------
@@ -485,7 +485,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/updateSatisfaction.do")
+    @RequestMapping("/cop/stf/egovupdateSatisfaction.do")
     public String updateSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, 
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
@@ -524,7 +524,7 @@ public class EgovBBSSatisfactionController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/cop/stf/anonymous/updateSatisfaction.do")
+    @RequestMapping("/cop/stf/anonymous/egovupdateSatisfaction.do")
     public String updateAnonymousSatisfaction(@ModelAttribute("searchVO") SatisfactionVO satisfactionVO, @ModelAttribute("satisfaction") Satisfaction satisfaction, 
 	    BindingResult bindingResult, ModelMap model) throws Exception {
 
